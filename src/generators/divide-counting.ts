@@ -1,5 +1,5 @@
 import { ChechResults, ExamplesGenerator } from "../types";
-import { generateId, random } from "../utils";
+import { generateId, random, round } from "../utils";
 
 const MIN_OPERAND = 1;
 
@@ -9,8 +9,8 @@ class DivideCountingGenerator implements ExamplesGenerator {
   readonly id = DivideCountingGenerator.generatorId;
 
   readonly options = {
-    MAX_DIVIDEND: { label: 'Максимальное частное', defaultValue: 10 },
-    FRACTION: { label: 'Размер дробной части частного', defaultValue: 0 },
+    MAX_QUOTIENT: { label: 'Максимальное частное', defaultValue: 10 },
+    FRACTION: { label: 'Размер дробной части делимого', defaultValue: 0 },
   };
   
   get description() {
@@ -20,21 +20,23 @@ class DivideCountingGenerator implements ExamplesGenerator {
   generate(count: number, generateOptions: Record<string, number>) {
     return [...Array(count).keys()].reduce((acc, number) => {
       const id = generateId();
+      const fraction = generateOptions.FRACTION || this.options.FRACTION.defaultValue;
+      const reducedFraction = Math.floor(fraction / 2);
       const [minOperand, maxOperand] = [...Array(2)]
         .map(() => random(
           MIN_OPERAND,
-          generateOptions.MAX_DIVIDEND || this.options.MAX_DIVIDEND.defaultValue,
-          generateOptions.FRACTION || this.options.FRACTION.defaultValue,
+          (generateOptions.MAX_QUOTIENT || this.options.MAX_QUOTIENT.defaultValue) * 10**reducedFraction,
         ))
         .sort((a, b) => a - b);
+      const dividend = (maxOperand * minOperand) / 10**fraction;
 
       return ({
         ...acc,
         [id]: {
           id,
           number,
-          answer: maxOperand,
-          exercise: `${maxOperand * minOperand} ${String.fromCharCode(247)} ${minOperand}`,
+          answer: round(dividend / (minOperand / 10**reducedFraction), fraction),
+          exercise: `${dividend} ${String.fromCharCode(247)} ${minOperand / 10**reducedFraction}`,
           checkResult: ChechResults.NotVerified,
         },
       });
