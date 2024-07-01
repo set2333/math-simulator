@@ -1,6 +1,6 @@
 import { Button, Space, Table, TableProps } from "antd";
 import { GENERATORS } from "../../consts";
-import SumVerbalCountingGenerator from "../../generators/sum-verbal-counting";
+import SumCountingGenerator from "../../generators/sum-counting";
 import { FC, useContext } from "react";
 import { observer } from "mobx-react-lite";
 import { StoreContext } from "../../store";
@@ -12,7 +12,7 @@ const GenerarorSettings: FC = observer(() => {
 
   const addGenerator = () => {
     store.generatorSettingsStore.addSetting({
-      generator: GENERATORS[SumVerbalCountingGenerator.generatorId],
+      generator: GENERATORS[SumCountingGenerator.generatorId],
       count: 10,
       options: { MAX_RESULT: 10, FRACTION: 0 },
     });

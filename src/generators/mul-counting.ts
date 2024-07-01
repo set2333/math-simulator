@@ -3,38 +3,37 @@ import { generateId, random } from "../utils";
 
 const MIN_OPERAND = 1;
 
-class SubVerbalCountingGenerator implements ExamplesGenerator {
-  static readonly generatorId = 'sub-verbal-counting';
-
-  readonly id = SubVerbalCountingGenerator.generatorId;
+class MulCountingGenerator implements ExamplesGenerator {
+  static readonly generatorId = 'mul-counting';
+  
+  readonly id = MulCountingGenerator.generatorId;
 
   readonly options = {
-    MAX_REDUCED: { label: 'Максимальное уменьшаемое', defaultValue: 10 },
+    MAX_MULTIPLIER: { label: 'Максимальный множитель', defaultValue: 10 },
     FRACTION: { label: 'Размер дробной части', defaultValue: 0 },
   };
   
   get description() {
-    return 'Вычитание';
+    return 'Умножение';
   }
 
   generate(count: number, generateOptions: Record<string, number>) {
     return [...Array(count).keys()].reduce((acc, number) => {
       const id = generateId();
-      const [minOperand, maxOperand] = [...Array(2)]
+      const [operand1, operand2] = [...Array(2)]
         .map(() => random(
           MIN_OPERAND,
-          generateOptions.MAX_REDUCED || this.options.MAX_REDUCED.defaultValue,
+          generateOptions.MAX_MULTIPLIER || this.options.MAX_MULTIPLIER.defaultValue,
           generateOptions.FRACTION || this.options.FRACTION.defaultValue,
         ))
-        .sort((a, b) => a - b);
 
       return ({
         ...acc,
         [id]: {
           id,
           number,
-          answer: maxOperand - minOperand,
-          exercise: `${maxOperand} - ${minOperand}`,
+          answer: operand1 * operand2,
+          exercise: `${operand1} ${String.fromCharCode(215)} ${operand2}`,
           checkResult: ChechResults.NotVerified,
         },
       });
@@ -42,4 +41,4 @@ class SubVerbalCountingGenerator implements ExamplesGenerator {
   }
 }
 
-export default SubVerbalCountingGenerator;
+export default MulCountingGenerator;

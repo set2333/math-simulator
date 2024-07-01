@@ -1,20 +1,20 @@
 import { ChechResults, ExamplesGenerator } from "../types";
-import { generateId, random, round } from "../utils";
+import { generateId, random } from "../utils";
 
 const MIN_OPERAND = 1;
 
-class SumVerbalCountingGenerator implements ExamplesGenerator {
-  static readonly generatorId = 'sum-verbal-counting';
-  
-  readonly id = SumVerbalCountingGenerator.generatorId;
+class SubCountingGenerator implements ExamplesGenerator {
+  static readonly generatorId = 'sub-verbal-counting';
+
+  readonly id = SubCountingGenerator.generatorId;
 
   readonly options = {
-    MAX_RESULT: { label: 'Максимальный результат', defaultValue: 10 },
+    MAX_REDUCED: { label: 'Максимальное уменьшаемое', defaultValue: 10 },
     FRACTION: { label: 'Размер дробной части', defaultValue: 0 },
   };
   
   get description() {
-    return 'Сложение';
+    return 'Вычитание';
   }
 
   generate(count: number, generateOptions: Record<string, number>) {
@@ -23,7 +23,7 @@ class SumVerbalCountingGenerator implements ExamplesGenerator {
       const [minOperand, maxOperand] = [...Array(2)]
         .map(() => random(
           MIN_OPERAND,
-          generateOptions.MAX_RESULT || this.options.MAX_RESULT.defaultValue,
+          generateOptions.MAX_REDUCED || this.options.MAX_REDUCED.defaultValue,
           generateOptions.FRACTION || this.options.FRACTION.defaultValue,
         ))
         .sort((a, b) => a - b);
@@ -33,8 +33,8 @@ class SumVerbalCountingGenerator implements ExamplesGenerator {
         [id]: {
           id,
           number,
-          answer: maxOperand,
-          exercise: `${round(maxOperand - minOperand, generateOptions.FRACTION || this.options.FRACTION.defaultValue)} + ${minOperand}`,
+          answer: maxOperand - minOperand,
+          exercise: `${maxOperand} - ${minOperand}`,
           checkResult: ChechResults.NotVerified,
         },
       });
@@ -42,4 +42,4 @@ class SumVerbalCountingGenerator implements ExamplesGenerator {
   }
 }
 
-export default SumVerbalCountingGenerator;
+export default SubCountingGenerator;

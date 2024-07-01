@@ -11,6 +11,10 @@ class ExamplesStore {
     this.rootStore = rootStore;
   }
 
+  get isAllAnswersGiven() {
+    return Object.values(this.examples).length && Object.values(this.examples).every(({ userAnswer }) => userAnswer !== undefined);
+  }
+
   get result() {
     const examples = Object.values(this.examples);
 

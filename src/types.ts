@@ -1,5 +1,7 @@
-import SubVerbalCountingGenerator from "./generators/sub-verbal-counting";
-import SumVerbalCountingGenerator from "./generators/sum-verbal-counting";
+import DivideCountingGenerator from "./generators/divide-counting";
+import MulCountingGenerator from "./generators/mul-counting";
+import SubCountingGenerator from "./generators/sub-counting";
+import SumCountingGenerator from "./generators/sum-counting";
 
 export type Answer = number;
 
@@ -28,7 +30,11 @@ export type ExamplesGenerator = {
   generate: (count: number, generateOptions: Record<string, number>) => Record<Id, Example>;
 }
 
-export type GeneratorsName = typeof SumVerbalCountingGenerator.generatorId | typeof SubVerbalCountingGenerator.generatorId;
+export type GeneratorsName = 
+  typeof SumCountingGenerator.generatorId
+  | typeof SubCountingGenerator.generatorId
+  | typeof DivideCountingGenerator.generatorId
+  | typeof MulCountingGenerator.generatorId;
 
 export type GeneratorSettings = {
   id: Id,

@@ -33,7 +33,11 @@ const Examples: FC = observer(() => {
         )}
       </Flex>
       <Flex vertical gap="small">
-        <Button style={{ width: '140px', marginTop: '10px' }} onClick={() => store.examplesStore.checkAnswers()}>
+        <Button
+          style={{ width: '140px', marginTop: '10px' }}
+          disabled={!store.examplesStore.isAllAnswersGiven}
+          onClick={() => store.examplesStore.checkAnswers()}
+        >
           Проверить
         </Button>
         <Text>{store.examplesStore.result}</Text>
