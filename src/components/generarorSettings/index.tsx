@@ -19,7 +19,7 @@ const GenerarorSettings: FC = observer(() => {
   };
 
   const columns: TableProps<GeneratorSettings>["columns"] = [
-    { title: "Тип", dataIndex: "generator"},
+    { title: "Тип", dataIndex: "generator" },
     { title: "Количество", dataIndex: "count" },
     { title: "Параметры", dataIndex: "options" },
     { title: "Действия", dataIndex: "actions" },
@@ -49,7 +49,7 @@ const GenerarorSettings: FC = observer(() => {
       </Space>
       <Table
         columns={columns}
-        dataSource={Object.values(store.generatorSettingsStore.settings)}
+        dataSource={Object.values(store.generatorSettingsStore.settings).map((setting) => ({ key: setting.id, ...setting }))}
         components={{ body: { cell: EditableCell } }}
         pagination={false}
       />

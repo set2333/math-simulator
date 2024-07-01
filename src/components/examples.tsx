@@ -16,8 +16,8 @@ const Examples: FC = observer(() => {
         {Object.values(store.examplesStore.examples).map(
           ({ id, exercise, checkResult }) => {
             return (
-              <Card size="small">
-                <Text key={id}>{`${exercise} =`}</Text>
+              <Card key={id} size="small">
+                <Text>{`${exercise} =`}</Text>
                 <Input
                   style={{ width: "50px" }}
                   onChange={({ target: { value } }) =>

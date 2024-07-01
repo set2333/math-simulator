@@ -4,18 +4,18 @@ import useEditingCellsMap from "./useEditingCellsMap";
 import useCellsMap from "./useCellsMap";
 import Actions from "./Actions";
 
-const EditableCell: FC<React.PropsWithChildren<EditableCellProps>> = (props) => {
+const EditableCell: FC<React.PropsWithChildren<EditableCellProps>> = ({ handleEdit, handleRemove, record, dataIndex, ...props}) => {
   const [editing, setEditing] = useState(false);
-  const EditingCellsMap = useEditingCellsMap({ editing, setEditing, ...props });
-  const CellsMap = useCellsMap(props);
+  const EditingCellsMap = useEditingCellsMap({ record, editing, setEditing, handleEdit });
+  const CellsMap = useCellsMap({ record });
 
   return (
     <td {...props}>
-      {props.dataIndex === 'actions'
-        ? <Actions {...props}/>
+      {dataIndex === 'actions'
+        ? <Actions record={record} handleRemove={handleRemove}/>
         : (editing
-          ? EditingCellsMap[props.dataIndex]
-          : <div onClick={() => setEditing(true)}>{CellsMap[props.dataIndex]}</div>
+          ? EditingCellsMap[dataIndex]
+          : <div onClick={() => setEditing(true)}>{CellsMap[dataIndex]}</div>
         )}
     </td>
   );
