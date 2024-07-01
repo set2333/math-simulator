@@ -20,9 +20,9 @@ class ExamplesStore {
   }
 
   generateExamples() {
-    this.examples = Object.values(this.rootStore.generatorSettingsStore.settings).reduce<Record<Id, Example>>((acc, { generator, count }) => ({
+    this.examples = Object.values(this.rootStore.generatorSettingsStore.settings).reduce<Record<Id, Example>>((acc, { generator, count, options }) => ({
       ...acc,
-      ...generator.generate(count),
+      ...generator.generate(count, options),
     }), {});
   }
 

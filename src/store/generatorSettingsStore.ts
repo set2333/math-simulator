@@ -20,6 +20,10 @@ class GeneratorSettingsStore {
   editSetting({ id, ...value }: GeneratorSettings) {
     this.settings[id] = ({ id, ...value });
   }
+
+  removeSetting(id: Id) {
+    delete this.settings[id];
+  }
 }
 
 export default GeneratorSettingsStore;
